@@ -13,11 +13,11 @@ def pickup_video_id(df):
     print('video_id:', len(video_id_list))
     return video_id_list
 
-def update_list(list_, las):
-    """リストからx以前を削除"""
+def update_list(list_, last_id):
+    """リストからlast_id以前を削除"""
     print('before:', len(list_))
     while True:
-        if x == list_[0]:
+        if last_id == list_[0]:
             list_.pop(0)
             break
         else:
