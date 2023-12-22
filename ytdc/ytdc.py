@@ -177,8 +177,8 @@ class YouTubeDataCollector:
         cols = ['video_id', 'title', 'description', 'publish_time', 'channel_title']
         if self.data_to_df(all_movies, cols, drop_dup=True):
             self.df = self.df.sort_values('publish_time').reset_index(drop=True)
-            query = self.channel_id if self.query is None else self.query
-            file_name = self.get_file_name(query, f"{start}_{str(self.current_date)[:len(start)]}")
+            name = self.query if self.query is not None else self.channel_id 
+            file_name = self.get_file_name(name, f"{start}_{str(self.current_date)[:len(start)]}")
             self.save_data(self.df, file_name)
 
     ######################## comment ########################
