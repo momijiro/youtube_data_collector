@@ -139,7 +139,7 @@ video_id_list = update_list(video_id_list, last_id)
 |ab12cd|今年もよろしく|2|2013-01-23T12:34:56Z |DDDDDDDeeeeeeeeffffGG||
 
 また、デフォルトは以下のように自動で`output/comment`を作成し保存します。(最後の`video_id`を使用)
-- `output/comment/comment_ab12cd.csv`
+- `output/comment/comment_lastvideoid.csv`
 
 ## 3. 動画の統計データの収集
 コメントと同様に、`video_id_list`を作成してから実行します。
@@ -164,5 +164,5 @@ df_stats
 |ab12cd|33333 |3|1|
 |zy34xw|4321 |1|0|
 
-また、デフォルトは以下のように自動で`output/stats`を作成し保存します。
-- `output/stats/stats.csv`
+また、デフォルトは以下のように自動で`output/stats`を作成し保存します。(最後の`video_id`を使用)
+- `output/stats/stats_lastvideoid.csv`
