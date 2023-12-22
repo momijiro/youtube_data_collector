@@ -221,7 +221,7 @@ class YouTubeDataCollector:
                 else:
                     print(f"error, {self.video_id}")
 
-        cols = ['video_id', 'comment', 'like_count', 'dislike_count', 'publish_time', 'author_id']
+        cols = ['video_id', 'comment', 'like_count', 'publish_time', 'author_id']
         if self.data_to_df(all_comments, cols, drop_dup=False):
             file_name = self.get_file_name("comment", self.video_id)
             self.save_data(self.df, file_name)
