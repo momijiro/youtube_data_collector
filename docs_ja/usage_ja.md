@@ -8,13 +8,13 @@
 どのデータを収集する際も、基本形は同じです。(実行する際には、先にQuick Startを御覧ください。)
 ``` Python
 collector = YouTubeDataCollector(
-                api_key=YOUTUBE_API_KEY, # 共通
-                mode='movie', # 'movie', 'comment', 'stats'のいずれかを指定
-                save = True, # True or False
-                args={}, # modeによって異なる
-                file_name = None, # 指定しない場合は自動で設定
-                output_path = 'output' # 指定しない場合は自動で設定
-            )
+    api_key=YOUTUBE_API_KEY, # 共通
+    mode='movie', # 'movie', 'comment', 'stats'のいずれかを指定
+    save = True, # True or False
+    args={}, # modeによって異なる
+    file_name = None, # 指定しない場合は自動で設定
+    output_path = 'output' # 指定しない場合は自動で設定
+)
 collector.run()
 df = collector.df
 ```
@@ -72,7 +72,7 @@ argsの中身として以下の4つがあるので、詳しく説明します。
 |`'2010'`|`'2010'`|`キーワード_2010_2012.csv`|
 |`'2010-01'`  |`'2010-12'`|`キーワード_2010-01_2012-12.csv`|
 |`'2010-01-01'`  |`'2010-12-31'`|`キーワード_2010-01-01_2012-12-31.csv`|
-||
+
 
 上記の3パターンはどれも結果としては(原理上)同じになります。なので長期間のデータを収集する場合は、API効率の観点からなるべく大きい単位 (年・月) を使用してください。 (詳しくは`note.md`をご覧ください)
 
@@ -112,9 +112,10 @@ video_id_list = pickup_video_id(df_movie)
 この`video_id_list`を用いて、`mode='comment'`としてコメントを収集します。
 ```
 collector = YouTubeDataCollector(
-    api_key=YOUTUBE_API_KEY,
-    mode='comment',
-    args={'video_id_list': video_id_list}
+        api_key=YOUTUBE_API_KEY,
+        mode='comment',
+        save=True,
+        args={'video_id_list': video_id_list}
 )
 collector.run()
 df_comment = collector.df
@@ -132,24 +133,22 @@ video_id_list = update_list(video_id_list, last_id)
 ### save
 コメントモードでは以下のようなデータを取得できます。
 
-| video_id | comment  |like_count | dislike_count | publish_time  |author_id|
-|---|---|---|---|---|---|
-|ab12cd|めでたいなぁ  |5 | 0 |2008-01-02T10:20:30Z |AAAAAAAAAabbbbbbbCC||
-|ab12cd|今年もよろしく|2|0|2013-01-23T12:34:56Z |DDDDDDDeeeeeeeeffffGG||
+| video_id | comment  |like_count | publish_time  |author_id|
+|---|---|---|---|---|
+|ab12cd|めでたいなぁ  |5 | 2008-01-02T10:20:30Z |AAAAAAAAAabbbbbbbCC||
+|ab12cd|今年もよろしく|2|2013-01-23T12:34:56Z |DDDDDDDeeeeeeeeffffGG||
 
-また、デフォルトは以下のように自動で`output/comments`を作成し保存します。(最後の`video_id`を使用)
-- `output/comments/comments_ab12cd.csv`
+また、デフォルトは以下のように自動で`output/comment`を作成し保存します。(最後の`video_id`を使用)
+- `output/comment/comment_ab12cd.csv`
 
 ## 3. 動画の統計データの収集
 コメントと同様に、`video_id_list`を作成してから実行します。
 ```
-df_movie = collector.df
-video_id_list = pickup_video_id(df_movie)
-
 collector = YouTubeDataCollector(
-   api_key=YOUTUBE_API_KEY,
-   mode='stats',
-   args={'video_id_list': video_id_list}
+        api_key=YOUTUBE_API_KEY,
+        mode='stats',
+        save=True,
+        args={'video_id_list': video_id_list}
 )
 collector.run()
 df_stats = collector.df
@@ -160,10 +159,10 @@ df_stats
 ### save
 統計データモードでは以下のようなデータを取得できます。
 
-|video_id  |View_count  |like_count  |dislke_count| comment_count|
-|---|---|---|---|---|
-|ab12cd|33333 |3|0|1|
-|zy34xw|4321 |1|0|0|
+|video_id  |View_count  |like_count  | comment_count|
+|---|---|---|---|
+|ab12cd|33333 |3|1|
+|zy34xw|4321 |1|0|
 
 また、デフォルトは以下のように自動で`output/stats`を作成し保存します。
 - `output/stats/stats.csv`
