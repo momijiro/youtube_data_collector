@@ -5,7 +5,7 @@ This library utilizes the [YouTube API v3](https://developers.google.com/youtube
 - For those who want to try it out right away -> See "Quick Start" below
 - For those who want to know about the main features (collecting videos, comments, and statistics) -> `docs_en/usage.md`
 - For practical use (explanations about API and quota) -> `docs_en/note.md`
-- For those who want to read an article explaining the whole thing -> [Qiita article]
+- For those who want to read an article explaining the whole thing -> [Qiita article](https://qiita.com/kanure24/items/a6a7ff3f0a5313d1bf5e)
 
 ### Quick Start
 
@@ -63,7 +63,7 @@ Thank you again for taking a look at this code. I would be happy if you could gi
 - とりあえず使ってみたい方 -> 以下の「Quick Start」
 - 主な機能 (動画・コメント・統計の収集)を知りたい方 -> `docs_ja/usage.md`
 - 実用に向けて (APIやquotaに関する説明) -> `docs_ja/note.md`
-- 全体を説明した記事が読みたい方 -> [Qiita記事]
+- 全体を説明した記事が読みたい方 -> [Qiita記事](https://qiita.com/kanure24/items/a6a7ff3f0a5313d1bf5e)
 
 ### Quick Start
 
