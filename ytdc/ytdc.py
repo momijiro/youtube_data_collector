@@ -197,7 +197,6 @@ class YouTubeDataCollector:
         """ responsesからコメントデータを抽出 """
         cols = ['textDisplay', 'likeCount', 'publishedAt']
         comments = []
-        print(responses)
         for item in responses['items']:
             snippet = item['snippet']['topLevelComment']['snippet']
             data = [snippet.get(c, None) for c in cols] + [snippet['authorChannelId']['value']]
