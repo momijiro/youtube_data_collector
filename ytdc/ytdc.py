@@ -165,17 +165,17 @@ class YouTubeDataCollector:
         self.get_start_list(start, end)
         self.youtube = self.service.search()
 
-        all_movies = []
+        self.all_movies = []
         for self.current_date in tqdm(self.start_list):
             try:
                 movies = self.unit_request(self.create_params_movie, self.extract_movies)
-                all_movies.extend(movies)
+                self.all_movies.extend(movies)
                 print(f"collect: {self.current_date}, {len(movies)}")
             except Exception as e:
                 print(f"quota exceed, {self.current_date}")
 
         cols = ['video_id', 'title', 'description', 'publish_time', 'channel_title']
-        if self.data_to_df(all_movies, cols, drop_dup=True):
+        if self.data_to_df(self.all_movies, cols, drop_dup=True):
             self.df = self.df.sort_values('publish_time').reset_index(drop=True)
             name = self.query if self.query is not None else self.channel_id 
             file_name = self.get_file_name(name, f"{start}_{str(self.current_date)[:len(start)]}")
@@ -207,11 +207,11 @@ class YouTubeDataCollector:
         self.video_id_list = video_id_list
         self.youtube = self.service.commentThreads()
 
-        all_comments = []
+        self.all_comments = []
         for self.video_id in tqdm(self.video_id_list):
             try:
                 comments = self.unit_request(self.create_params_comment, self.extract_comments)
-                all_comments.extend([[self.video_id] + x for x in comments])
+                self.all_comments.extend([[self.video_id] + x for x in comments])
                 print(f"collect: {self.video_id}, {len(comments)}")
 
             except Exception as e:
@@ -222,7 +222,7 @@ class YouTubeDataCollector:
                     print(f"error, {self.video_id}")
 
         cols = ['video_id', 'comment', 'like_count', 'publish_time', 'author_id']
-        if self.data_to_df(all_comments, cols, drop_dup=False):
+        if self.data_to_df(self.all_comments, cols, drop_dup=False):
             file_name = self.get_file_name("comment", self.video_id)
             self.save_data(self.df, file_name)
 
@@ -247,11 +247,11 @@ class YouTubeDataCollector:
         self.video_id_list = video_id_list
         self.youtube = self.service.videos()
 
-        all_stats = []
+        self.all_stats = []
         for self.video_id in tqdm(self.video_id_list):
             try:
                 stats = self.unit_request(self.create_params_stats, self.extract_stats)
-                all_stats.extend(stats)
+                self.all_stats.extend(stats)
                 print(f"collect: {self.video_id}, {len(stats)}")
             except Exception as e:
                 if "quota" in str(e):
@@ -259,11 +259,11 @@ class YouTubeDataCollector:
                     break
                 else:
                     print(f"no stat, {self.video_id}")
-                    all_stats.append([self.video_id, 0, 0, 0])
+                    self.all_stats.append([self.video_id, 0, 0, 0])
                     continue
 
         cols = ['video_id', 'view_count', 'like_count', 'comment_count']
-        if self.data_to_df(all_stats, cols, drop_dup=True):
+        if self.data_to_df(self.all_stats, cols, drop_dup=True):
             file_name = self.get_file_name("stats", self.video_id)
             self.save_data(self.df, file_name)
 
